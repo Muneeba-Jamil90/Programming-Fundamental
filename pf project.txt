@@ -1,0 +1,89 @@
+#include <stdio.h>
+
+// Global array representing the board
+char square[9] = { '0', '1', '2', '3', '4', '5', '6', '7', '8' };
+
+// Function to check the winner
+int checkwin() {
+    if (square[0] == square[1] && square[1] == square[2])
+        return (square[0] == 'X') ? 1 : 2;
+    else if (square[3] == square[4] && square[4] == square[5])
+        return (square[3] == 'X') ? 1 : 2;
+    else if (square[6] == square[7] && square[7] == square[8])
+        return (square[6] == 'X') ? 1 : 2;
+    else if (square[0] == square[3] && square[3] == square[6])
+        return (square[0] == 'X') ? 1 : 2;
+    else if (square[1] == square[4] && square[4] == square[7])
+        return (square[1] == 'X') ? 1 : 2;
+    else if (square[2] == square[5] && square[5] == square[8])
+        return (square[2] == 'X') ? 1 : 2;
+    else if (square[0] == square[4] && square[4] == square[8])
+        return (square[0] == 'X') ? 1 : 2;
+    else if (square[2] == square[4] && square[4] == square[6])
+        return (square[2] == 'X') ? 1 : 2;
+    else
+        return 0; // No winner yet
+}
+
+// Function to mark the board
+void mark(int player, int box) {
+    if (player == 1)
+        square[box] = 'X';
+    else
+        square[box] = 'O';
+}
+
+// Function to display the board
+void display() {
+    for (int i = 0; i < 9; i++) {
+        printf("%c\t", square[i]);
+        if (i == 2 || i == 5 || i == 8)
+            printf("\n");
+    }
+}
+
+// Main function
+int main() {
+    int player1 = 1, player2 = 2;
+    int box, result = 0, flag = 0;
+
+    for (int i = 1; i <= 5; i++) {
+        printf("\nPlayer %d Enter the Box: ", player1);
+        scanf("%d", &box);
+        mark(player1, box);
+        display();
+
+        result = checkwin();
+        if (result == 1) {
+            printf("\nCongratulations! Player %d has Won.\n", player1);
+            flag = 1;
+            break;
+        } else if (result == 2) {
+            printf("\nCongratulations! Player %d has Won.\n", player2);
+            flag = 1;
+            break;
+        }
+
+        printf("\nPlayer %d Enter the Box: ", player2);
+        scanf("%d", &box);
+        mark(player2, box);
+        display();
+
+        result = checkwin();
+        if (result == 1) {
+            printf("\nCongratulations! Player %d has Won.\n", player1);
+            flag = 1;
+            break;
+        } else if (result == 2) {
+            printf("\nCongratulations! Player %d has Won.\n", player2);
+            flag = 1;
+            break;
+        }
+    }
+
+    if (flag == 0)
+        printf("\nSorry, the game is a draw.\n");
+
+    return 0;
+}
+s
